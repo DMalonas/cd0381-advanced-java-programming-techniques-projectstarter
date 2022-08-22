@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.time.Duration;
+import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -44,7 +45,7 @@ public final class ConfigurationLoaderTest {
     assertThat(config.getParallelism()).isEqualTo(4);
     assertThat(config.getImplementationOverride()).isEqualTo("fully.qualified.OverrideClass");
     assertThat(config.getMaxDepth()).isEqualTo(100);
-    assertThat(config.getTimeout()).isEqualTo(Duration.ofSeconds(10));
+    assertThat(config.getTimeoutSeconds()).isEqualTo(Duration.ofSeconds(10));
     assertThat(config.getPopularWordCount()).isEqualTo(5);
     assertThat(config.getProfileOutputPath()).isEqualTo("profileOutput.txt");
     assertThat(config.getResultPath()).isEqualTo("resultPath.json");
@@ -67,13 +68,14 @@ public final class ConfigurationLoaderTest {
       fail("Streams should usually be closed in the same scope where they were created", e);
     }
 
-    assertThat(config.getStartPages()).isEmpty();
+    List<String> startPages = config.getStartPages();
+    assertThat(startPages).isEmpty();
     assertThat(config.getIgnoredUrls()).isEmpty();
     assertThat(config.getIgnoredWords()).isEmpty();
     assertThat(config.getParallelism()).isEqualTo(-1);
     assertThat(config.getImplementationOverride()).isEmpty();
     assertThat(config.getMaxDepth()).isEqualTo(100);
-    assertThat(config.getTimeout()).isEqualTo(Duration.ofSeconds(10));
+    assertThat(config.getTimeoutSeconds()).isEqualTo(Duration.ofSeconds(10));
     assertThat(config.getPopularWordCount()).isEqualTo(5);
     assertThat(config.getProfileOutputPath()).isEmpty();
     assertThat(config.getResultPath()).isEmpty();

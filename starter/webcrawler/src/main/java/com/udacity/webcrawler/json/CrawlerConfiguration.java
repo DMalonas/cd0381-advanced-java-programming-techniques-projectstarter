@@ -1,50 +1,57 @@
 package com.udacity.webcrawler.json;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
+
+import javax.annotation.Nullable;
+import java.io.Serializable;
 import java.time.Duration;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
  * A data class that represents the configuration of a single web crawl.
  */
-public final class CrawlerConfiguration {
-
+@Builder
+@Getter
+@Jacksonized
+public final class CrawlerConfiguration implements Serializable {
+  @Nullable
   private final List<String> startPages;
-  private final List<Pattern> ignoredUrls;
-  private final List<Pattern> ignoredWords;
-  private final int parallelism;
-  private final String implementationOverride;
-  private final int maxDepth;
-  private final Duration timeout;
-  private final int popularWordCount;
-  private final String profileOutputPath;
-  private final String resultPath;
 
-  private CrawlerConfiguration(
-      List<String> startPages,
-      List<Pattern> ignoredUrls,
-      List<Pattern> ignoredWords,
-      int parallelism,
-      String implementationOverride,
-      int maxDepth,
-      Duration timeout,
-      int popularWordCount,
-      String profileOutputPath,
-      String resultPath) {
-    this.startPages = startPages;
-    this.ignoredUrls = ignoredUrls;
-    this.ignoredWords = ignoredWords;
-    this.parallelism = parallelism;
-    this.implementationOverride = implementationOverride;
+  @Nullable  private final List<Pattern> ignoredUrls;
+  @Nullable private final List<Pattern> ignoredWords;
+  @Nullable private final int parallelism;
+  @Nullable private final String implementationOverride;
+  @Nullable private final int maxDepth;
+  @Nullable private final Duration timeoutSeconds;
+  @Nullable private final int popularWordCount;
+  @Nullable private final String profileOutputPath;
+  @Nullable private final String resultPath;
+
+  CrawlerConfiguration(
+          List<String> startPages,
+          List<Pattern> ignoredUrls,
+          List<Pattern> ignoredWords,
+          int parallelism,
+          String implementationOverride,
+          int maxDepth,
+          Duration timeoutSeconds,
+          int popularWordCount,
+          String profileOutputPath,
+          String resultPath) {
+    this.startPages = startPages == null ? new ArrayList<>() : startPages;
+    this.ignoredUrls = ignoredUrls == null ? new ArrayList<>() : ignoredUrls;
+    this.ignoredWords = ignoredWords == null ? new ArrayList<>() : ignoredWords;
+    this.parallelism = parallelism == 0 ? -1 : parallelism;
+    this.implementationOverride = implementationOverride == null ? "" : implementationOverride;
     this.maxDepth = maxDepth;
-    this.timeout = timeout;
+    this.timeoutSeconds = timeoutSeconds;
     this.popularWordCount = popularWordCount;
-    this.profileOutputPath = profileOutputPath;
-    this.resultPath = resultPath;
+    this.profileOutputPath = profileOutputPath == null ? "" : profileOutputPath;
+    this.resultPath = resultPath == null ? "" : resultPath;
   }
 
   /**
@@ -118,7 +125,7 @@ public final class CrawlerConfiguration {
    * </pre>
    *
    * <p>In this example, the crawler will visit at most A, B, C, and D. The crawler may visit
-   * <i>fewer</i> pages if it runs out of time before it can finish. See {@link #getTimeout()}.
+   * <i>fewer</i> pages if it runs out of time before it can finish. See {@link #getTimeoutSeconds()}.
    */
   public int getMaxDepth() {
     return maxDepth;
@@ -132,8 +139,8 @@ public final class CrawlerConfiguration {
    * finish processing any HTML it has already downloaded, but it will not download any more pages
    * or follow any more links.
    */
-  public Duration getTimeout() {
-    return timeout;
+  public Duration getTimeoutSeconds() {
+    return timeoutSeconds;
   }
 
   /**
@@ -263,7 +270,7 @@ public final class CrawlerConfiguration {
     /**
      * Sets the maximum amount of time allowed for the crawl, specified in seconds.
      *
-     * <p>See {@link #getTimeout()}.
+     * <p>See {@link #getTimeoutSeconds()}.
      */
     public Builder setTimeoutSeconds(int seconds) {
       this.timeoutSeconds = seconds;

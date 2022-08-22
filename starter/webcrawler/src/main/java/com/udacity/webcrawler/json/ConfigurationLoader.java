@@ -1,5 +1,11 @@
 package com.udacity.webcrawler.json;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -39,7 +45,20 @@ public final class ConfigurationLoader {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(reader);
     // TODO: Fill in this method
+    BufferedReader bufferedReader = new BufferedReader(reader);
+    CrawlerConfiguration crawlerConfiguration;
+    try {
+      String contents = bufferedReader.readLine();
+      ObjectMapper objectMapper = new ObjectMapper();
+      objectMapper.registerModule(new JavaTimeModule());
+      objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-    return new CrawlerConfiguration.Builder().build();
+      crawlerConfiguration = objectMapper.readValue(contents, CrawlerConfiguration.class);
+      System.out.println(contents);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+
+    return crawlerConfiguration;
   }
 }

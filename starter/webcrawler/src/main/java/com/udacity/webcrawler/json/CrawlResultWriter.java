@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * Utility class to write a {@link CrawlResult} to file.
@@ -46,16 +48,22 @@ public final class CrawlResultWriter {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(writer);
     // TODO: Fill in this method.
-    BufferedWriter bufferedWriter = new BufferedWriter(writer);
+    Supplier<Writer> writerSupplier = () -> writer;
+    BufferedWriter bufferedWriter = new BufferedWriter(writer , 2);
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.registerModule(new JavaTimeModule());
     try {
-      objectMapper.writeValue(bufferedWriter, result);
-      int a = 5;
+      objectMapper.writeValue(writerSupplier.get(), result);
+//      int a = 5;
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-
-    int a = 5;
+//    finally {
+//      try {
+//        writer.close();
+//      } catch (IOException e) {
+//        throw new RuntimeException(e);
+//      }
+//    }
   }
 }

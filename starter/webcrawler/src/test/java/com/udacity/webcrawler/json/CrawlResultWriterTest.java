@@ -27,8 +27,9 @@ public final class CrawlResultWriterTest {
     CrawlResultWriter resultWriter = new CrawlResultWriter(result);
     CloseableStringWriter stringWriter = new CloseableStringWriter();
     resultWriter.write(stringWriter);
+    boolean closed = stringWriter.isClosed();
     assertWithMessage("Streams should usually be closed in the same scope where they were created")
-        .that(stringWriter.isClosed())
+        .that(closed)
         .isFalse();
     String written = stringWriter.toString();
 

@@ -28,9 +28,10 @@ public final class CrawlResultWriterTest {
     CloseableStringWriter stringWriter = new CloseableStringWriter();
     resultWriter.write(stringWriter);
     boolean closed = stringWriter.isClosed();
-    assertWithMessage("Streams should usually be closed in the same scope where they were created")
+    assertWithMessage("Streams should usually be closed "
+            + "in the same scope where they were created")
         .that(closed)
-        .isFalse();
+        .isFalse(); //central time us -6
     String written = stringWriter.toString();
 
     // The purpose of all the wildcard matchers (".*") is to make sure we allow the JSON output to

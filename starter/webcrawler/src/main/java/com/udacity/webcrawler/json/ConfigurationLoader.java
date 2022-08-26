@@ -1,6 +1,5 @@
 package com.udacity.webcrawler.json;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -51,14 +50,11 @@ public final class ConfigurationLoader {
       String contents = bufferedReader.readLine();
       ObjectMapper objectMapper = new ObjectMapper();
       objectMapper.registerModule(new JavaTimeModule());
-      objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
       crawlerConfiguration = objectMapper.readValue(contents, CrawlerConfiguration.class);
       System.out.println(contents);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-
     return crawlerConfiguration;
   }
 }

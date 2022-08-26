@@ -1,5 +1,6 @@
 package com.udacity.webcrawler.json;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
@@ -241,6 +242,7 @@ public final class CrawlerConfiguration implements Serializable {
      *
      * <p>See {@link #getParallelism()}.
      */
+    @JsonProperty("parallelism")
     public Builder setParallelism(int parallelism) {
       this.parallelism = parallelism;
       return this;
@@ -252,6 +254,7 @@ public final class CrawlerConfiguration implements Serializable {
      *
      * <p>See {@link #getImplementationOverride()}.
      */
+    @JsonProperty("implementationOverride")
     public Builder setImplementationOverride(String implementationOverride) {
       this.implementationOverride = Objects.requireNonNull(implementationOverride);
       return this;
@@ -262,6 +265,7 @@ public final class CrawlerConfiguration implements Serializable {
      *
      * <p>See {@link #getMaxDepth()}.
      */
+    @JsonProperty("maxDepth")
     public Builder setMaxDepth(int maxDepth) {
       this.maxDepth = maxDepth;
       return this;
@@ -272,6 +276,7 @@ public final class CrawlerConfiguration implements Serializable {
      *
      * <p>See {@link #getTimeoutSeconds()}.
      */
+    @JsonProperty("seconds")
     public Builder setTimeoutSeconds(int seconds) {
       this.timeoutSeconds = seconds;
       return this;
@@ -282,6 +287,7 @@ public final class CrawlerConfiguration implements Serializable {
      *
      * <p>See {@link #getPopularWordCount()}.
      */
+    @JsonProperty("popularWordCount")
     public Builder setPopularWordCount(int popularWordCount) {
       this.popularWordCount = popularWordCount;
       return this;
@@ -292,6 +298,7 @@ public final class CrawlerConfiguration implements Serializable {
      *
      * <p>See {@link #getProfileOutputPath()}.
      */
+    @JsonProperty("profileOutputPath")
     public Builder setProfileOutputPath(String profileOutputPath) {
       this.profileOutputPath = Objects.requireNonNull(profileOutputPath);
       return this;
@@ -302,6 +309,7 @@ public final class CrawlerConfiguration implements Serializable {
      *
      * <p>See {@link #getResultPath()}.
      */
+    @JsonProperty("resultPath")
     public Builder setResultPath(String resultPath) {
       this.resultPath = Objects.requireNonNull(resultPath);
       return this;

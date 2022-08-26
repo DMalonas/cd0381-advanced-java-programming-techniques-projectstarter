@@ -47,5 +47,15 @@ public final class CrawlResultWriter {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+//        ALTERNATIVE IMPLEMENTATION
+    //        ObjectMapper objectMapper = new ObjectMapper();
+    //    objectMapper.registerModule(new JavaTimeModule());
+    //    BufferedWriter br = new BufferedWriter(writer);
+    //    objectMapper.disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
+    //    try {
+    //      objectMapper.writeValue(br, result);
+    //    } catch (IOException e) {
+    //      throw new RuntimeException(e);
+    //    }
   }
 }

@@ -6,7 +6,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -30,8 +32,25 @@ public final class ConfigurationLoader {
    */
   public CrawlerConfiguration load() {
     // TODO: Fill in this method.
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.registerModule(new JavaTimeModule());
+    CrawlerConfiguration crawlerConfiguration = null;
+    try {
+      List<String> strings = Files.readAllLines(path);
+      int a = 5;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
 
-    return new CrawlerConfiguration.Builder().build();
+    try {
+
+      BufferedReader srcPath = Files.newBufferedReader(path);
+      crawlerConfiguration = objectMapper.readValue(srcPath, CrawlerConfiguration.class);
+      System.out.println(crawlerConfiguration);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return crawlerConfiguration;
   }
 
   /**

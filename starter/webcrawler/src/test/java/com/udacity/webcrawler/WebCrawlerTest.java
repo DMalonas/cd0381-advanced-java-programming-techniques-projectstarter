@@ -3,6 +3,7 @@ package com.udacity.webcrawler;
 import com.google.inject.Guice;
 import com.udacity.webcrawler.json.CrawlResult;
 import com.udacity.webcrawler.json.CrawlerConfiguration;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -22,6 +23,7 @@ public final class WebCrawlerTest {
   private WebCrawler crawler;
 
   private static final String DATA_DIR = System.getProperty("testDataDir");
+
 
   static Stream<Class<?>> provideTestParameters() throws Exception {
     String[] names = System.getProperty("crawlerImplementations").split("\\s+");

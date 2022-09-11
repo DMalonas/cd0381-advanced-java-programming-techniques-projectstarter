@@ -65,7 +65,7 @@ public final class WebCrawlerMain {
 //      return;
 //    }
 
-    Path path = Paths.get("C:\\Users\\dmalonas\\Downloads\\cd0381-advanced-java-programming-techniques-projectstarter\\starter\\webcrawler\\src\\main\\config\\written_question_1a.json");
+    Path path = Paths.get("starter/webcrawler/src/main/config/sample_config.json");
     ConfigurationLoader configurationLoader = new ConfigurationLoader(path);
     CrawlerConfiguration config = configurationLoader.load();
     new WebCrawlerMain(config).run();

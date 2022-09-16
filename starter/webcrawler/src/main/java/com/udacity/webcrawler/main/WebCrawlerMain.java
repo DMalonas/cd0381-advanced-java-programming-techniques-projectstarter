@@ -65,7 +65,7 @@ public final class WebCrawlerMain {
 //      return;
 //    }
 
-    Path path = Paths.get("starter/webcrawler/src/main/config/sample_config.json");
+    Path path = Paths.get(args[0]);
     ConfigurationLoader configurationLoader = new ConfigurationLoader(path);
     CrawlerConfiguration config = configurationLoader.load();
     new WebCrawlerMain(config).run();

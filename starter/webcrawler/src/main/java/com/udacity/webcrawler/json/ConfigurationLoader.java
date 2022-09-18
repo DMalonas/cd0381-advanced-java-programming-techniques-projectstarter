@@ -31,26 +31,11 @@ public final class ConfigurationLoader {
    * @return the loaded {@link CrawlerConfiguration}.
    */
   public CrawlerConfiguration load() {
-    // TODO: Fill in this method.
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.registerModule(new JavaTimeModule());
-    CrawlerConfiguration crawlerConfiguration = null;
-    try {
-      List<String> strings = Files.readAllLines(path);
-      int a = 5;
+    try(Reader reader = Files.newBufferedReader(path)) {
+      return read(reader);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-
-    try {
-
-      BufferedReader srcPath = Files.newBufferedReader(path);
-      crawlerConfiguration = objectMapper.readValue(srcPath, CrawlerConfiguration.class);
-      System.out.println(crawlerConfiguration);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-    return crawlerConfiguration;
   }
 
   /**

@@ -79,9 +79,10 @@ final class SequentialWebCrawler implements WebCrawler {
         return;
       }
     }
-    if (!visitedUrls.add(url)) {
+    if (visitedUrls.contains(url)) {
       return;
     }
+    visitedUrls.add(url);
     PageParser.Result result = parserFactory.get(url).parse();
     for (Map.Entry<String, Integer> e : result.getWordCounts().entrySet()) {
       if (counts.containsKey(e.getKey())) {

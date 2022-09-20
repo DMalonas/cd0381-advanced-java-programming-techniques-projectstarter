@@ -33,22 +33,27 @@ public final class ConfigurationLoader {
    */
   public CrawlerConfiguration load() {
     // TODO: Fill in this method.
-    ObjectMapper objectMapper = new ObjectMapper();
-    objectMapper.registerModule(new JavaTimeModule());
-    CrawlerConfiguration crawlerConfiguration = null;
-    try {
-      List<String> strings = Files.readAllLines(path);
+    try(Reader reader = Files.newBufferedReader(path)) {
+      return read(reader);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-
-    try(BufferedReader srcPath = Files.newBufferedReader(path)) {
-      crawlerConfiguration = objectMapper.readValue(srcPath, CrawlerConfiguration.class);
-      System.out.println(crawlerConfiguration);
-    } catch (IOException ex) {
-      ex.printStackTrace();
-    }
-    return crawlerConfiguration;
+    //    ObjectMapper objectMapper = new ObjectMapper();
+//    objectMapper.registerModule(new JavaTimeModule());
+//    CrawlerConfiguration crawlerConfiguration = null;
+//    try {
+//      List<String> strings = Files.readAllLines(path);
+//    } catch (IOException e) {
+//      throw new RuntimeException(e);
+//    }
+//
+//    try(BufferedReader srcPath = Files.newBufferedReader(path)) {
+//      crawlerConfiguration = objectMapper.readValue(srcPath, CrawlerConfiguration.class);
+//      System.out.println(crawlerConfiguration);
+//    } catch (IOException ex) {
+//      ex.printStackTrace();
+//    }
+//    return crawlerConfiguration;
   }
 
   /**

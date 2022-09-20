@@ -34,6 +34,7 @@ public final class CrawlResultWriter {
     // TODO: Fill in this method.
     try (Writer writer = Files.newBufferedWriter(path)) {
       write(writer);
+      writer.flush();
     } catch (IOException ex) {
       ex.printStackTrace();
     }
@@ -50,6 +51,7 @@ public final class CrawlResultWriter {
     try {
       String s = objectMapper.writeValueAsString(result);
       writer.write(s);
+      writer.flush();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

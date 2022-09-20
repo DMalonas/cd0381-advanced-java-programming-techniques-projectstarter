@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -37,18 +38,15 @@ public final class ConfigurationLoader {
     CrawlerConfiguration crawlerConfiguration = null;
     try {
       List<String> strings = Files.readAllLines(path);
-      int a = 5;
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
 
-    try {
-
-      BufferedReader srcPath = Files.newBufferedReader(path);
+    try(BufferedReader srcPath = Files.newBufferedReader(path)) {
       crawlerConfiguration = objectMapper.readValue(srcPath, CrawlerConfiguration.class);
       System.out.println(crawlerConfiguration);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    } catch (IOException ex) {
+      ex.printStackTrace();
     }
     return crawlerConfiguration;
   }

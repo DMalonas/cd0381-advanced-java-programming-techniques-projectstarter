@@ -36,7 +36,8 @@ public final class ConfigurationLoader {
     try(Reader reader = Files.newBufferedReader(path)) {
       return read(reader);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
+      return null;
     }
     //    ObjectMapper objectMapper = new ObjectMapper();
 //    objectMapper.registerModule(new JavaTimeModule());

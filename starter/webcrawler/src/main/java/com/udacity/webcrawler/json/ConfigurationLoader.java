@@ -1,5 +1,6 @@
 package com.udacity.webcrawler.json;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -36,8 +37,7 @@ public final class ConfigurationLoader {
     try(Reader reader = Files.newBufferedReader(path)) {
       return read(reader);
     } catch (IOException e) {
-      e.printStackTrace();
-      return null;
+      throw new RuntimeException(e);
     }
     //    ObjectMapper objectMapper = new ObjectMapper();
 //    objectMapper.registerModule(new JavaTimeModule());
@@ -67,14 +67,12 @@ public final class ConfigurationLoader {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(reader);
     // TODO: Fill in this method
-    BufferedReader bufferedReader = new BufferedReader(reader);
     CrawlerConfiguration crawlerConfiguration;
     try {
-      String contents = bufferedReader.readLine();
       ObjectMapper objectMapper = new ObjectMapper();
       objectMapper.registerModule(new JavaTimeModule());
-      crawlerConfiguration = objectMapper.readValue(contents, CrawlerConfiguration.class);
-      System.out.println(contents);
+      objectMapper.disable(JsonParser.Feature.AUTO_CLOSE_SOURCE);
+      crawlerConfiguration = objectMapper.readValue(reader, CrawlerConfiguration.class);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
